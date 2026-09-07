@@ -18,9 +18,9 @@ retriever = OKFRetriever(index, config)
 tools = create_okf_tools(retriever)
 ```
 
-`create_okf_tools(retriever)` devuelve siete callables preparados para ser
-registrados en un runtime de agentes. Cada tool delega en el mismo retriever y
-devuelve los mismos resultados y errores que la API directa.
+`create_okf_tools(retriever)` devuelve un registro de siete `ToolSpec` indexado
+por nombre. Cada schema declara parámetros y valida la entrada antes de
+delegar en el mismo retriever.
 
 ## Tools públicas
 
@@ -37,15 +37,18 @@ devuelve los mismos resultados y errores que la API directa.
 Ejemplo de invocación:
 
 ```python
-search_okf_context = tools[0]
+search_okf_context = tools["search_okf_context"]
 results = search_okf_context(query="authentication", limit=5)
 
-get_okf_context = tools[6]
+get_okf_context = tools["get_okf_context"]
 context = get_okf_context(query="authentication", max_tokens=400)
 ```
 
 La salida mantiene la procedencia (`concept_id`, `path`, `section_id` o
 `heading_path`) y las operaciones respetan el orden determinista del índice.
+El estado de calidad está disponible como `index.quality_report.to_dict()`;
+incluye documentos rechazados, diagnósticos, enlaces rotos y duración, sin
+incluir cuerpos documentales ni rutas absolutas.
 
 ## Validación
 

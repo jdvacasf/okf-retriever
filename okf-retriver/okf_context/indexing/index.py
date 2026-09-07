@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
-from okf_context.models import OKFConcept, OKFSection, RetrievalDiagnostic
+from okf_context.models import CorpusQualityReport, OKFConcept, OKFSection, RetrievalDiagnostic
+from .lexical import LexicalIndex
 
 
 @dataclass
@@ -14,6 +15,9 @@ class OKFContextIndex:
     incoming: dict[str, set[str]] = field(default_factory=dict)
     diagnostics: list[RetrievalDiagnostic] = field(default_factory=list)
     build_stats: dict[str, int | float] = field(default_factory=dict)
+    quality_report: CorpusQualityReport | None = None
+    concept_lexical: LexicalIndex | None = None
+    section_lexical: LexicalIndex | None = None
     ready: bool = False
 
     @classmethod

@@ -18,11 +18,20 @@ class RetrievalService:
         if not query or not query.strip() or not __import__("re").search(r"[\wÀ-ÿ]", query):
             raise OKFInvalidQuery("query has no searchable tokens")
 
+    def _validate_lexical_indexes(self) -> None:
+        if (self.index.concept_lexical is None or self.index.section_lexical is None
+                or not self.index.concept_lexical.is_consistent(set(self.index.concepts))
+                or not self.index.section_lexical.is_consistent(set(self.index.sections))):
+            raise OKFError("lexical index is not ready", ErrorCode.LEXICAL_INDEX_NOT_READY)
+
     def search_context(self, query: str, *, types=None, tags=None, status=None, path_prefix=None, limit=None) -> list[SearchResult]:
         self._validate_query(query)
         limit = self._limit(limit)
+        self._validate_lexical_indexes()
+        candidates = self.index.concept_lexical.search(query, len(self.index.concepts))
         results = []
-        for concept in self.index.concepts.values():
+        for concept_id, _, _ in candidates:
+            concept = self.index.concepts[concept_id]
             if types and concept.type not in types or tags and not set(tags).intersection(concept.tags) or status and concept.status not in status or path_prefix and not concept.path.startswith(path_prefix):
                 continue
             sections = [self.index.sections[item] for item in concept.section_ids]
@@ -38,8 +47,11 @@ class RetrievalService:
     def search_sections(self, query: str, *, path_prefix=None, concept_ids=None, limit=None) -> list[SearchResult]:
         self._validate_query(query)
         limit = self._limit(limit)
+        self._validate_lexical_indexes()
+        candidates = self.index.section_lexical.search(query, len(self.index.sections))
         results = []
-        for section in self.index.sections.values():
+        for section_id, _, _ in candidates:
+            section = self.index.sections[section_id]
             concept = self.index.concepts[section.concept_id]
             if path_prefix and not section.path.startswith(path_prefix) or concept_ids and section.concept_id not in concept_ids:
                 continue

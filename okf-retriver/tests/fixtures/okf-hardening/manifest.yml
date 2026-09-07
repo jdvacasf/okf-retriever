@@ -1,0 +1,12 @@
+recoverable:
+  - valid.md
+  - malformed.md
+  - missing-delimiter.md
+  - unknown.md
+rejected:
+  - no-boundary.md
+diagnostics:
+  malformed.md: MALFORMED_FRONTMATTER
+  missing-delimiter.md: MISSING_FRONTMATTER_DELIMITER
+  no-boundary.md: MALFORMED_DOCUMENT
+  broken-link.md: BROKEN_LINK

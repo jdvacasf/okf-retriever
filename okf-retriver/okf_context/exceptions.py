@@ -12,6 +12,8 @@ class ErrorCode(StrEnum):
     INVALID_TOKEN_BUDGET = "INVALID_TOKEN_BUDGET"
     INDEX_NOT_READY = "INDEX_NOT_READY"
     MALFORMED_FRONTMATTER = "MALFORMED_FRONTMATTER"
+    TOOL_INPUT = "TOOL_INPUT"
+    LEXICAL_INDEX_NOT_READY = "LEXICAL_INDEX_NOT_READY"
 
 
 class OKFError(Exception):
@@ -41,3 +43,12 @@ class OKFSectionNotFound(OKFError):
 
 class OKFInvalidQuery(OKFError):
     code = ErrorCode.INVALID_QUERY
+
+
+class ToolInputError(OKFError):
+    code = ErrorCode.TOOL_INPUT
+
+    def __init__(self, tool: str, argument: str, message: str) -> None:
+        super().__init__(f"{tool}.{argument}: {message}")
+        self.tool = tool
+        self.argument = argument

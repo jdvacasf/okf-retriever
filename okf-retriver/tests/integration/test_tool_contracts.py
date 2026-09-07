@@ -10,17 +10,17 @@ class ToolContractTests(unittest.TestCase):
         root = Path(__file__).parents[1] / "fixtures" / "okf"
         config = OKFContextConfig(root)
         tools = create_okf_tools(OKFRetriever(OKFContextIndex.build(config), config))
-        self.assertEqual([tool.__name__ for tool in tools], ["search_okf_context", "search_okf_sections", "browse_okf", "inspect_okf_concept", "read_okf_section", "traverse_okf_graph", "get_okf_context"])
+        self.assertEqual(list(tools), ["search_okf_context", "search_okf_sections", "browse_okf", "inspect_okf_concept", "read_okf_section", "traverse_okf_graph", "get_okf_context"])
 
     def test_all_tools_are_invocable(self):
         root = Path(__file__).parents[1] / "fixtures" / "okf"
         config = OKFContextConfig(root)
         retriever = OKFRetriever(OKFContextIndex.build(config), config)
         tools = create_okf_tools(retriever)
-        self.assertTrue(tools[0](query="authentication"))
-        self.assertTrue(tools[1](query="authentication"))
-        self.assertIn("concepts", tools[2]())
-        self.assertEqual(tools[3](concept_id="services/auth").concept_id, "services/auth")
-        self.assertTrue(tools[4](section_id="services/auth#deployment").content)
-        self.assertIsInstance(tools[5](concept_id="services/auth"), list)
-        self.assertTrue(tools[6](query="authentication").sections)
+        self.assertTrue(tools["search_okf_context"](query="authentication"))
+        self.assertTrue(tools["search_okf_sections"](query="authentication"))
+        self.assertIn("concepts", tools["browse_okf"]())
+        self.assertEqual(tools["inspect_okf_concept"](concept_id="services/auth").concept_id, "services/auth")
+        self.assertTrue(tools["read_okf_section"](section_id="services/auth#deployment").content)
+        self.assertIsInstance(tools["traverse_okf_graph"](concept_id="services/auth"), list)
+        self.assertTrue(tools["get_okf_context"](query="authentication").sections)
