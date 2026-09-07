@@ -1,0 +1,9 @@
+- query: authentication
+  expected_concepts:
+    - services/auth
+  expected_sections:
+    - services/auth#deployment
+- query: redis login
+  expected_concepts:
+    - infrastructure/redis
+    - services/auth
