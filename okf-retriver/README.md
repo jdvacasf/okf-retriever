@@ -50,6 +50,47 @@ El estado de calidad está disponible como `index.quality_report.to_dict()`;
 incluye documentos rechazados, diagnósticos, enlaces rotos y duración, sin
 incluir cuerpos documentales ni rutas absolutas.
 
+## Respuestas fundamentadas en varios documentos
+
+`MultiDocumentAnswerer` usa el contexto deduplicado y acotado del retriever,
+pero mantiene el proveedor LLM fuera del núcleo. El proveedor implementa un
+único método `answer(request)` y devuelve el mapping descrito por el contrato:
+
+```python
+from okf_context.reasoning import MultiDocumentAnswerer
+
+
+class Provider:
+    def answer(self, request):
+        section = request.evidence[0]
+        return {
+            "answer": "Respuesta soportada por el corpus.",
+            "synthesis": "Síntesis breve de la evidencia citada.",
+            "citations": [{"path": section.path, "section_id": section.section_id}],
+            "insufficient": False,
+            "conflicts": [],
+        }
+
+
+answerer = MultiDocumentAnswerer(retriever, Provider())
+result = answerer.answer("¿Qué dice el corpus?", max_tokens=800, max_sections=8)
+print(result.to_dict())
+```
+
+Las citas solo se aceptan si coinciden exactamente con el `path` y
+`section_id` del contexto usado. Sin evidencia se devuelve un
+`GroundedAnswer` con `insufficient=True` sin llamar al proveedor. Los fallos
+operativos usan códigos estables:
+
+- `PROVIDER_NOT_CONFIGURED`: falta el proveedor.
+- `PROVIDER_FAILURE`: el proveedor falló.
+- `INVALID_PROVIDER_OUTPUT`: el mapping, las citas o los conflictos no cumplen
+  el contrato.
+
+Las instrucciones fijas y el texto de evidencia viajan separados. Los logs de
+razonamiento solo contienen el resultado operativo y el tiempo transcurrido;
+no incluyen preguntas, evidencia ni respuestas.
+
 ## Validación
 
 ```bash

@@ -11,6 +11,7 @@ class ToolContractTests(unittest.TestCase):
         config = OKFContextConfig(root)
         tools = create_okf_tools(OKFRetriever(OKFContextIndex.build(config), config))
         self.assertEqual(list(tools), ["search_okf_context", "search_okf_sections", "browse_okf", "inspect_okf_concept", "read_okf_section", "traverse_okf_graph", "get_okf_context"])
+        self.assertNotIn("answer_okf_question", tools)
 
     def test_all_tools_are_invocable(self):
         root = Path(__file__).parents[1] / "fixtures" / "okf"

@@ -1,0 +1,18 @@
+- query: memory context
+  expected_outcome: supported
+  required_section_ids:
+    - memory#langgraph-memory
+    - context#context-management
+  minimum_citations: 2
+
+- query: session retention
+  expected_outcome: conflict
+  required_section_ids:
+    - retention-current#session-retention
+    - retention-legacy#session-retention
+  minimum_citations: 2
+
+- query: absent quantum policy
+  expected_outcome: insufficient
+  required_section_ids: []
+  minimum_citations: 0

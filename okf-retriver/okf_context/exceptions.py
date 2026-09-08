@@ -14,6 +14,9 @@ class ErrorCode(StrEnum):
     MALFORMED_FRONTMATTER = "MALFORMED_FRONTMATTER"
     TOOL_INPUT = "TOOL_INPUT"
     LEXICAL_INDEX_NOT_READY = "LEXICAL_INDEX_NOT_READY"
+    PROVIDER_NOT_CONFIGURED = "PROVIDER_NOT_CONFIGURED"
+    PROVIDER_FAILURE = "PROVIDER_FAILURE"
+    INVALID_PROVIDER_OUTPUT = "INVALID_PROVIDER_OUTPUT"
 
 
 class OKFError(Exception):
@@ -52,3 +55,7 @@ class ToolInputError(OKFError):
         super().__init__(f"{tool}.{argument}: {message}")
         self.tool = tool
         self.argument = argument
+
+
+class OKFReasoningError(OKFError):
+    """Stable error raised at the optional reasoning boundary."""

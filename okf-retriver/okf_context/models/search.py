@@ -17,16 +17,21 @@ class SearchResult:
     score_breakdown: dict[str, float] = field(default_factory=dict)
 
 
-@dataclass
+@dataclass(frozen=True)
 class ContextSection:
     section_id: str
     concept_id: str
     path: str
-    heading_path: list[str]
+    heading_path: tuple[str, ...]
     content: str
     relevance: float
     freshness: str
     verified: bool | None
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.heading_path, (list, tuple)) or not all(isinstance(item, str) for item in self.heading_path):
+            raise ValueError("heading_path must contain strings")
+        object.__setattr__(self, "heading_path", tuple(self.heading_path))
 
 
 @dataclass
