@@ -7,8 +7,10 @@
     {
       "name": "okf-graph-retrieval",
       "source": {
-        "source": "local",
-        "path": "./okf-retriver"
+        "source": "git-subdir",
+        "url": "https://github.com/jdvacasf/okf-retriever.git",
+        "path": "./okf-retriver",
+        "ref": "main"
       },
       "policy": {
         "installation": "AVAILABLE",

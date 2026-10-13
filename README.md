@@ -13,9 +13,12 @@ The plugin package is in `okf-retriver/`; the marketplace catalog is at the
 repository root.
 
 ```bash
-codex plugin marketplace add jdvacasf/okf-retriever
+codex plugin marketplace add jdvacasf/okf-retriever --sparse .agents/plugins
 codex plugin add okf-graph-retrieval@okf-retriver
 ```
+
+If the marketplace is already registered, refresh it with
+`codex plugin marketplace upgrade okf-retriver` before installing the plugin.
 
 For Claude Code:
 
