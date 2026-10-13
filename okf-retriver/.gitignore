@@ -12,7 +12,9 @@ coverage/
 .DS_Store
 .vscode/
 .idea/
-.agents/
+.agents/*
+!.agents/plugins/
+!.agents/plugins/marketplace.json
 .specify/
 specs/
 AGENTS.md

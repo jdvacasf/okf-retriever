@@ -1,10 +1,11 @@
----
-title: OKF Fixture Index
-type: index
-tags: [fixture]
-verified: true
----
-# Knowledge
+# Concepts
 
-- [Authentication](services/auth.md)
-- [Redis](infrastructure/redis.md)
+* [OKF Fixture Corpus](README.md) - English and Spanish retrieval corpus used by the test suite.
+* [Broken Link](broken.md)
+
+# Subdirectories
+
+* [deprecated](deprecated/)
+* [infrastructure](infrastructure/)
+* [runbooks](runbooks/)
+* [services](services/)

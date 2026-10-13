@@ -1,0 +1,5 @@
+{
+  "name": "okf-graph-retrieval",
+  "description": "Traverse OKF knowledge graphs and locate grounded Markdown evidence.",
+  "version": "0.1.0"
+}

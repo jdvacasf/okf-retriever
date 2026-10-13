@@ -1,0 +1,12 @@
+{
+  "name": "okf-retriver",
+  "owner": {
+    "name": "OKF Retriever contributors"
+  },
+  "plugins": [
+    {
+      "name": "okf-graph-retrieval",
+      "source": "."
+    }
+  ]
+}

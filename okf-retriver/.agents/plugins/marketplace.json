@@ -1,0 +1,20 @@
+{
+  "name": "okf-retriver",
+  "interface": {
+    "displayName": "OKF Retriever Plugins"
+  },
+  "plugins": [
+    {
+      "name": "okf-graph-retrieval",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/jdvacasf/okf-retriever.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

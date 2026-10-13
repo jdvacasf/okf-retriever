@@ -1,3 +1,30 @@
+---
+title: OKF Context Retriever
+description: Deterministic retriever and grounded multi-document answerer for OKF Markdown corpora.
+type: project-documentation
+tags: [okf, retrieval, reasoning, python]
+---
+
+## Agent plugin
+
+This repository also packages the `okf-graph-retrieval` skill for Codex and
+Claude Code. It traverses an OKF link graph and returns Markdown sections with
+exact `path` and `section_id` provenance.
+
+Install from the GitHub marketplace:
+
+```bash
+codex plugin marketplace add jdvacasf/okf-retriever
+codex plugin add okf-graph-retrieval@okf-retriver
+```
+
+Claude Code:
+
+```text
+/plugin marketplace add jdvacasf/okf-retriever
+/plugin install okf-graph-retrieval@okf-retriver
+```
+
 # OKF Context Retriever
 
 Retriever determinista para corpus OKF en Markdown. El corpus es la fuente de

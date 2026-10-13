@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "okf-graph-retrieval",
+  "version": "0.1.0",
+  "description": "Traverse OKF knowledge graphs and locate grounded Markdown evidence.",
+  "repository": "https://github.com/jdvacasf/okf-retriever",
+  "license": "MIT",
+  "keywords": ["okf", "knowledge-graph", "retrieval", "markdown"]
+}
