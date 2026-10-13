@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "okf-graph-retrieval",
-      "source": "."
+      "source": "./okf-retriver"
     }
   ]
 }
